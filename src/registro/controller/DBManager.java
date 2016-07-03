@@ -99,4 +99,20 @@ public class DBManager {
         }
         return false;
     }
+    
+    public Persona getPersonaById(int id) {
+        for (Persona persona : mPersonas) {
+            if (Integer.parseInt(persona.getId()) == id)
+                return persona;
+        }
+        return null;
+    }
+    
+    public Prestamo getPrestamoById(int id) {
+        for (Prestamo prestamo : mPrestamos) {
+            if (Integer.parseInt(prestamo.getCodigo()) == id)
+                return prestamo;
+        }
+        return null;
+    }
 }

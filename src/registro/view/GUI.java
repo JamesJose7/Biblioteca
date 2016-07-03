@@ -130,6 +130,11 @@ public class GUI extends javax.swing.JFrame {
         observacionesTxtField = new javax.swing.JTextArea();
         reportePrestamosPanel = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        prestamoMaterialTable = new javax.swing.JTable();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        reportePrestamosTable = new javax.swing.JTable();
         reporteMaterialPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         reporteMaterialTable = new javax.swing.JTable();
@@ -442,11 +447,8 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jLabel19))
                         .addGap(4, 4, 4)
                         .addGroup(registroPrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(registroPrestamosPanelLayout.createSequentialGroup()
-                                .addGroup(registroPrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(showMaterialBCmBx, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(showPersonaField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(showMaterialBCmBx, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(showPersonaField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane5)))
                     .addComponent(jLabel12)
                     .addGroup(registroPrestamosPanelLayout.createSequentialGroup()
@@ -539,21 +541,74 @@ public class GUI extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel21.setText("Registro de Préstamos");
 
+        prestamoMaterialTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(prestamoMaterialTable);
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel15.setText("Material Bibliográfico");
+
+        reportePrestamosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        reportePrestamosTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                reportePrestamosTableMouseDragged(evt);
+            }
+        });
+        reportePrestamosTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reportePrestamosTableMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(reportePrestamosTable);
+
         javax.swing.GroupLayout reportePrestamosPanelLayout = new javax.swing.GroupLayout(reportePrestamosPanel);
         reportePrestamosPanel.setLayout(reportePrestamosPanelLayout);
         reportePrestamosPanelLayout.setHorizontalGroup(
             reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reportePrestamosPanelLayout.createSequentialGroup()
-                .addContainerGap(233, Short.MAX_VALUE)
-                .addComponent(jLabel21)
-                .addContainerGap(224, Short.MAX_VALUE))
+            .addGroup(reportePrestamosPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                    .addGroup(reportePrestamosPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel15))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         reportePrestamosPanelLayout.setVerticalGroup(
             reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(reportePrestamosPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel21)
-                .addContainerGap(493, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         reporteMaterialPanel.setMinimumSize(new java.awt.Dimension(659, 529));
@@ -679,9 +734,7 @@ public class GUI extends javax.swing.JFrame {
                                     .addComponent(jLabel2))
                                 .addGap(32, 32, 32)
                                 .addGroup(registroMaterialPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(registroMaterialPanelLayout.createSequentialGroup()
-                                        .addComponent(registrarMaterialBtn)
-                                        .addGap(0, 0, 0))
+                                    .addComponent(registrarMaterialBtn)
                                     .addComponent(tituloMaterialField)
                                     .addComponent(anioMaterialField)
                                     .addComponent(atributoMaterialField)
@@ -920,6 +973,14 @@ public class GUI extends javax.swing.JFrame {
     private void atributoPersonaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atributoPersonaFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_atributoPersonaFieldActionPerformed
+
+    private void reportePrestamosTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportePrestamosTableMouseClicked
+        displayMaterialPrestamo();
+    }//GEN-LAST:event_reportePrestamosTableMouseClicked
+
+    private void reportePrestamosTableMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportePrestamosTableMouseDragged
+        displayMaterialPrestamo();
+    }//GEN-LAST:event_reportePrestamosTableMouseDragged
 
     /**
      * @param args the command line arguments
@@ -1478,56 +1539,83 @@ public class GUI extends javax.swing.JFrame {
         return false;
     }
 
-    JScrollPane prestamosTableContainer;
-
     private void reportePrestamos() {
-        //reportePrestamos.setVisible(false);
 
-        String[] colsNames = {"Código", "Material Retirado", "Persona", "Fecha", "Fecha Dev", "Estado", "Observaciones"};
+        String[] colsNames = {"Codigo",
+            "Fecha Prestamo",
+            "Fecha Devolución",
+            "Estado",
+            "Observaciones",
+            "Nombre",
+            "Correo",
+            "Telefono"
+        };
 
         DefaultTableModel model = new DefaultTableModel(colsNames, 0);
 
-        int rowC = 0;
-
-        String[][] tableData = new String[mDBManager.getPrestamos().size()][7];
         for (Prestamo prestamo : mDBManager.getPrestamos()) {
+            Persona persona = prestamo.getPersona();
+
             String[] data = {
                 prestamo.getCodigo(),
-                getFirstMaterial(prestamo.getMateriales()),
-                prestamo.getPersona().getNombres(),
                 DBPrestamos.dateFormat.format(prestamo.getFecha()),
                 DBPrestamos.dateFormat.format(prestamo.getFechaDevolucion()),
                 getEstado(prestamo.getEstatus()),
-                prestamo.getObservaciones()
+                prestamo.getObservaciones(),
+                persona.getNombres(),
+                persona.getCorreo(),
+                persona.getTelefono()
             };
-
-            tableData[rowC] = data;
-
             model.addRow(data);
 
-            rowC++;
         }
+        reportePrestamosTable.setModel(model);
 
-        PrestamosTableCustom tableC = new PrestamosTableCustom(tableData);
-        JTable table = tableC.getTable(mDBManager.getPrestamos());
+        //Materiales table
+        String[] materialCols = {
+            "Autor",
+            "Titulo",
+            "Anio",
+            "Estado",
+            "Tipo"};
 
-         //reportePrestamos.setModel(tableC.getTable(mFileManager.getPrestamos()).getModel());
-        JFrame reportePrestamosFrame = new JFrame("Reporte prestamos");
-        reportePrestamosFrame.setLocationRelativeTo(null);
-        reportePrestamosFrame.setPreferredSize(new Dimension(659, 529));
+        DefaultTableModel materialesModel = new DefaultTableModel(materialCols, 0);
+        prestamoMaterialTable.setModel(materialesModel);
+    }
 
-        JPanel prestamosTablePanel = new JPanel();
-        prestamosTablePanel.setLayout(new BorderLayout());
+    private void displayMaterialPrestamo() {
+        int nSelectedRows = reportePrestamosTable.getSelectedRowCount();
 
-        prestamosTableContainer = new JScrollPane(table);
-        prestamosTablePanel.add(prestamosTableContainer);
+        if (nSelectedRows == 1) {
+            int rowI = reportePrestamosTable.getSelectedRow();
+            int prestamoId = Integer.valueOf(reportePrestamosTable.getValueAt(rowI, 0) + "");
 
-        reportePrestamosFrame.getContentPane().add(prestamosTablePanel);
+            String[] materialCols = {
+                "Autor",
+                "Titulo",
+                "Anio",
+                "Estado",
+                "Tipo"};
 
-        reportePrestamosFrame.pack();
-        this.getContentPane().add(prestamosTableContainer);
-        //frame.setVisible(true);
-        prestamosTableContainer.setVisible(true);
+            DefaultTableModel model = new DefaultTableModel(materialCols, 0);
+
+            for (MaterialBibliografico material : mDBManager.getPrestamoById(prestamoId).getMateriales()) {
+                String[] data = {
+                    material.getAutor(),
+                    material.getTitulo(),
+                    material.getAnio() + "",
+                    material.getEstatus() + "",
+                    material.getClass().getSimpleName()
+                };
+
+                model.addRow(data);
+            }
+
+            prestamoMaterialTable.setModel(model);
+
+        } else if (nSelectedRows > 1) {
+            JOptionPane.showMessageDialog(null, "Seleccionar un solo prestamo por favor");
+        }
     }
 
     private String getEstado(Boolean estado) {
@@ -1535,11 +1623,6 @@ public class GUI extends javax.swing.JFrame {
             return "Prestado";
         }
         return "Devuelto";
-    }
-
-    private String getFirstMaterial(List<MaterialBibliografico> materiales) {
-        return String.format("%s | %s",
-                materiales.get(0).getCodigo(), materiales.get(0).getTitulo());
     }
 
     ////////////////////////////////////////////////
@@ -1591,7 +1674,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void switchToRepPrestamos() {
         initialLayout();
-        //reportePrestamosPanel.setVisible(true);
+        reportePrestamosPanel.setVisible(true);
 
         reportePrestamos();
     }
@@ -1603,9 +1686,6 @@ public class GUI extends javax.swing.JFrame {
         reportePersonasPanel.setVisible(false);
         registroPrestamosPanel.setVisible(false);
         reportePrestamosPanel.setVisible(false);
-        if (prestamosTableContainer != null) {
-            prestamosTableContainer.setVisible(false);
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1630,6 +1710,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1664,6 +1745,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTable materialesTable;
     private javax.swing.JSpinner mesDevolucionSpinner;
     private javax.swing.JTextField nRegistrosMaterialesTxtF;
@@ -1671,6 +1754,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField nombresPersonaField;
     private javax.swing.JTextArea observacionesTxtField;
     private javax.swing.JTable personasTable;
+    private javax.swing.JTable prestamoMaterialTable;
     private javax.swing.JButton registrarMaterialBtn;
     private javax.swing.JButton registrarPersonaBtn;
     private javax.swing.JButton registrarPrestamoBtn;
@@ -1682,6 +1766,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTable reportePersonas;
     private javax.swing.JPanel reportePersonasPanel;
     private javax.swing.JPanel reportePrestamosPanel;
+    private javax.swing.JTable reportePrestamosTable;
     private javax.swing.JComboBox showMaterialBCmBx;
     private javax.swing.JTextField showPersonaField;
     private javax.swing.JTextField telefonoPersonaField;

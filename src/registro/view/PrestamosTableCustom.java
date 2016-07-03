@@ -39,14 +39,6 @@ public class PrestamosTableCustom extends JPanel {
         }
 
         //  Create the table with default data
-        /*Object[][] data
-                = {
-                    {"Color", "Red"},
-                    {"Shape", "Square"},
-                    {"Fruit", "Banana"},
-                    {"Plain", "Text"}
-                };*/
-        //String[] columnNames = {"Type", "Value"};
         String[] columnNames = {"Código", "Material Retirado", "Persona", "Fecha", "Fecha Dev", "Estado", "Observaciones"};
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable table = new JTable(model) {
@@ -69,20 +61,5 @@ public class PrestamosTableCustom extends JPanel {
 
     }
 
-    /*private static void createAndShowUI() {
-        JFrame frame = new JFrame("Table Combo Box by Row");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new TableComboBoxByRow());
-        frame.setSize(200, 200);
-        frame.setLocationByPlatform(true);
-        frame.setVisible(true);
-    }*/
-
-    /*public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowUI();
-            }
-        });
-    }*/
+    
 }
