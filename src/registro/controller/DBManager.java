@@ -100,6 +100,14 @@ public class DBManager {
         return false;
     }
     
+    public MaterialBibliografico getMaterialById(int id) {
+        for (MaterialBibliografico material : mMaterialBibliografico) {
+            if (Integer.parseInt(material.getCodigo()) == id)
+                return material;
+        }
+        return null;
+    }
+    
     public Persona getPersonaById(int id) {
         for (Persona persona : mPersonas) {
             if (Integer.parseInt(persona.getId()) == id)

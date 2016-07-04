@@ -9,11 +9,15 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,9 +25,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpinnerDateModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import javax.swing.text.DefaultFormatter;
 import javax.swing.text.TableView;
 import registro.model.Alumno;
 import registro.model.Docente;
@@ -71,6 +78,44 @@ public class GUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Connection to database failed");
             e.printStackTrace();
         }
+
+        
+        //Spinner Config
+        JComponent comp = mesDevolucionSpinner.getEditor();
+        JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
+        DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
+        formatter.setCommitsOnValidEdit(true);
+        mesDevolucionSpinner.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int value = (int) mesDevolucionSpinner.getValue();
+
+                if (value >= 13) {
+                    mesDevolucionSpinner.setValue(1);
+                } else if (value <= 0) {
+                    mesDevolucionSpinner.setValue(12);
+                }
+            }
+        });
+
+        JComponent comp2 = diaDevolucionSpinner.getEditor();
+        JFormattedTextField field2 = (JFormattedTextField) comp2.getComponent(0);
+        DefaultFormatter formatter2 = (DefaultFormatter) field2.getFormatter();
+        formatter2.setCommitsOnValidEdit(true);
+        diaDevolucionSpinner.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int value = (int) diaDevolucionSpinner.getValue();
+
+                if (value >= 32) {
+                    diaDevolucionSpinner.setValue(1);
+                } else if (value <= 0) {
+                    diaDevolucionSpinner.setValue(31);
+                }
+            }
+        });
     }
 
     /**
@@ -419,9 +464,9 @@ public class GUI extends javax.swing.JFrame {
 
         anioDevolucionSpinner.setModel(new javax.swing.SpinnerNumberModel(2000, 2000, 2000, 1));
 
-        mesDevolucionSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        mesDevolucionSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 13, 1));
 
-        diaDevolucionSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        diaDevolucionSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 32, 1));
 
         jLabel25.setText("Año");
 
@@ -1327,7 +1372,7 @@ public class GUI extends javax.swing.JFrame {
     private Persona personaSeleccionada;
 
     public void addMaterialBibliograficoDisponibles() {
-        List<JCheckBox> materialBChkBxs = new ArrayList<>();
+        Map<Integer, JCheckBox> materialBChkBxs = new HashMap<>();
 
         JFrame mostrarMaterialesFrame = new JFrame();
         JButton agregarMaterialBtn;
@@ -1343,9 +1388,9 @@ public class GUI extends javax.swing.JFrame {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 materialSeleccionado = new ArrayList<>();
-                for (JCheckBox cb : materialBChkBxs) {
-                    if (cb.isSelected()) {
-                        agregarMaterialPrestamo(cb.getText());
+                for (Map.Entry<Integer, JCheckBox> entry : materialBChkBxs.entrySet()) {
+                    if (entry.getValue().isSelected()) {
+                        agregarMaterialPrestamo(entry.getKey());
                     }
                 }
                 mostrarMaterialesFrame.setVisible(false);
@@ -1356,7 +1401,7 @@ public class GUI extends javax.swing.JFrame {
         materialBChkBxs.clear();
         for (MaterialBibliografico material : mDBManager.getMaterial()) {
             JCheckBox cb = new JCheckBox(material.getTitulo());
-            materialBChkBxs.add(cb);
+            materialBChkBxs.put(Integer.parseInt(material.getCodigo()), cb);
             mostrarMaterialPanel.add(cb);
             mostrarMaterialPanel.revalidate();
             mostrarMaterialPanel.repaint();
@@ -1370,12 +1415,8 @@ public class GUI extends javax.swing.JFrame {
         mostrarMaterialesFrame.setVisible(true);
     }
 
-    private void agregarMaterialPrestamo(String titulo) {
-        for (MaterialBibliografico material : mDBManager.getMaterial()) {
-            if (titulo.equals(material.getTitulo())) {
-                materialSeleccionado.add(material);
-            }
-        }
+    private void agregarMaterialPrestamo(int idMaterial) {
+        materialSeleccionado.add(mDBManager.getMaterialById(idMaterial));
     }
 
     private void cargarMaterialPrestamo() {
