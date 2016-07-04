@@ -74,7 +74,6 @@ public class DBManager {
 
     public void importPrestamos() throws ClassNotFoundException, SQLException {
         mPrestamos = mDBPrestamos.consultar();
-        System.out.println("");
     }
     
     public void insertPrestamo(Prestamo prestamo) throws ClassNotFoundException, SQLException {

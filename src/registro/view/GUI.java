@@ -180,6 +180,8 @@ public class GUI extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         reportePrestamosTable = new javax.swing.JTable();
+        nRegistrosPrestamosTxtF = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         reporteMaterialPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         reporteMaterialTable = new javax.swing.JTable();
@@ -625,6 +627,10 @@ public class GUI extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(reportePrestamosTable);
 
+        nRegistrosPrestamosTxtF.setEditable(false);
+
+        jLabel16.setText("Resultados Encontrados:");
+
         javax.swing.GroupLayout reportePrestamosPanelLayout = new javax.swing.GroupLayout(reportePrestamosPanel);
         reportePrestamosPanel.setLayout(reportePrestamosPanelLayout);
         reportePrestamosPanelLayout.setHorizontalGroup(
@@ -634,26 +640,34 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
                     .addGroup(reportePrestamosPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel15))
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(nRegistrosPrestamosTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel15)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(reportePrestamosPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel21)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         reportePrestamosPanelLayout.setVerticalGroup(
             reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(reportePrestamosPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addComponent(jLabel21)
-                .addGap(25, 25, 25)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel15)
+                .addGroup(reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(nRegistrosPrestamosTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(5, Short.MAX_VALUE))
         );
 
         reporteMaterialPanel.setMinimumSize(new java.awt.Dimension(659, 529));
@@ -692,9 +706,9 @@ public class GUI extends javax.swing.JFrame {
         reporteMaterialPanelLayout.setHorizontalGroup(
             reporteMaterialPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(reporteMaterialPanelLayout.createSequentialGroup()
-                .addContainerGap(262, Short.MAX_VALUE)
+                .addContainerGap(234, Short.MAX_VALUE)
                 .addComponent(jLabel20)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(234, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reporteMaterialPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(reporteMaterialPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1611,6 +1625,7 @@ public class GUI extends javax.swing.JFrame {
 
         }
         reportePrestamosTable.setModel(model);
+        nRegistrosPrestamosTxtF.setText(mDBManager.getPrestamos().size() + "");
 
         //Materiales table
         String[] materialCols = {
@@ -1752,6 +1767,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1792,6 +1808,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JSpinner mesDevolucionSpinner;
     private javax.swing.JTextField nRegistrosMaterialesTxtF;
     private javax.swing.JTextField nRegistrosPersonasTxtF;
+    private javax.swing.JTextField nRegistrosPrestamosTxtF;
     private javax.swing.JTextField nombresPersonaField;
     private javax.swing.JTextArea observacionesTxtField;
     private javax.swing.JTable personasTable;
