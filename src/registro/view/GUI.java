@@ -43,10 +43,6 @@ import registro.model.Tesis;
 import registro.controller.DBManager;
 import registro.controller.DBPrestamos;
 
-/**
- *
- * @author salas
- */
 public class GUI extends javax.swing.JFrame {
 
     private DBManager mDBManager;
@@ -79,7 +75,6 @@ public class GUI extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-        
         //Spinner Config
         JComponent comp = mesDevolucionSpinner.getEditor();
         JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
@@ -1190,52 +1185,41 @@ public class GUI extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel(colsNames, 0);
 
         for (MaterialBibliografico material : mDBManager.getMaterial()) {
+            String[] dataMaterial = {
+                material.getCodigo(),
+                material.getAutor(),
+                material.getTitulo(),
+                material.getAnio() + "",
+                getEstadoToString(material.getEstatus()),
+                "",
+                ""
+            };
+
             switch (material.getClass().getSimpleName().toLowerCase()) {
                 case MaterialBibliografico.LIBRO:
                     Libro libro = (Libro) material;
 
-                    String[] libroData = {
-                        libro.getCodigo(),
-                        libro.getAutor(),
-                        libro.getTitulo(),
-                        libro.getAnio() + "",
-                        libro.getEstatus() + "",
-                        libro.getEditorial(),
-                        MaterialBibliografico.LIBRO
-                    };
+                    dataMaterial[5] = libro.getEditorial();
+                    dataMaterial[6] = MaterialBibliografico.LIBRO;
 
-                    model.addRow(libroData);
+                    model.addRow(dataMaterial);
                     break;
                 case MaterialBibliografico.REVISTA:
                     Revista revista = (Revista) material;
 
-                    String[] revistaData = {
-                        revista.getCodigo(),
-                        revista.getAutor(),
-                        revista.getTitulo(),
-                        revista.getAnio() + "",
-                        revista.getEstatus() + "",
-                        revista.getNumero() + "",
-                        MaterialBibliografico.REVISTA
-                    };
+                    dataMaterial[5] = revista.getNumero() + "";
+                    dataMaterial[6] = MaterialBibliografico.REVISTA;
 
-                    model.addRow(revistaData);
+                    model.addRow(dataMaterial);
 
                     break;
                 case MaterialBibliografico.TESIS:
                     Tesis tesis = (Tesis) material;
 
-                    String[] tesisData = {
-                        tesis.getCodigo(),
-                        tesis.getAutor(),
-                        tesis.getTitulo(),
-                        tesis.getAnio() + "",
-                        tesis.getEstatus() + "",
-                        tesis.getCodigoTesis() + "",
-                        MaterialBibliografico.TESIS
-                    };
+                    dataMaterial[5] = tesis.getCodigoTesis() + "";
+                    dataMaterial[6] = MaterialBibliografico.TESIS;
 
-                    model.addRow(tesisData);
+                    model.addRow(dataMaterial);
                     break;
                 default:
 
@@ -1315,34 +1299,31 @@ public class GUI extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel(colsNames, 0);
 
         for (Persona persona : mDBManager.getPersonas()) {
+            String[] dataPersona = {
+                persona.getId(),
+                persona.getNombres(),
+                persona.getCorreo(),
+                persona.getTelefono(),
+                "",
+                ""
+            };
+
             switch (persona.getClass().getSimpleName().toLowerCase()) {
                 case Persona.ALUMNO:
                     Alumno alumno = (Alumno) persona;
 
-                    String[] alumnoData = {
-                        alumno.getId(),
-                        alumno.getNombres(),
-                        alumno.getCorreo(),
-                        alumno.getTelefono(),
-                        alumno.getIdMatricula(),
-                        Persona.ALUMNO
-                    };
+                    dataPersona[4] = alumno.getIdMatricula();
+                    dataPersona[5] = Persona.ALUMNO;
 
-                    model.addRow(alumnoData);
+                    model.addRow(dataPersona);
                     break;
                 case Persona.DOCENTE:
                     Docente docente = (Docente) persona;
 
-                    String[] docenteData = {
-                        docente.getId(),
-                        docente.getNombres(),
-                        docente.getCorreo(),
-                        docente.getTelefono(),
-                        docente.getCodigoDocente(),
-                        Persona.DOCENTE
-                    };
+                    dataPersona[4] = docente.getCodigoDocente();
+                    dataPersona[5] = Persona.DOCENTE;
 
-                    model.addRow(docenteData);
+                    model.addRow(dataPersona);
                     break;
                 default:
             }
@@ -1555,7 +1536,7 @@ public class GUI extends javax.swing.JFrame {
                 mDBManager.insertPrestamo(new Prestamo(materialSeleccionado,
                         personaSeleccionada,
                         new Date(), fechaDevolucion,
-                        getEstado(estadoCmBx.getSelectedItem().toString()),
+                        getEstadoToBool(estadoCmBx.getSelectedItem().toString()),
                         observacionesTxtField.getText()));
 
                 resetSpinners();
@@ -1570,13 +1551,6 @@ public class GUI extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
         }
-    }
-
-    private boolean getEstado(String estado) {
-        if (estado.equals("Prestado")) {
-            return false;
-        }
-        return true;
     }
 
     private void clearFields() {
@@ -1615,7 +1589,7 @@ public class GUI extends javax.swing.JFrame {
                 prestamo.getCodigo(),
                 DBPrestamos.dateFormat.format(prestamo.getFecha()),
                 DBPrestamos.dateFormat.format(prestamo.getFechaDevolucion()),
-                getEstado(prestamo.getEstatus()),
+                getEstadoToString(prestamo.getEstatus()),
                 prestamo.getObservaciones(),
                 persona.getNombres(),
                 persona.getCorreo(),
@@ -1672,13 +1646,6 @@ public class GUI extends javax.swing.JFrame {
         } else if (nSelectedRows > 1) {
             JOptionPane.showMessageDialog(null, "Seleccionar un solo prestamo por favor");
         }
-    }
-
-    private String getEstado(Boolean estado) {
-        if (!estado) {
-            return "Prestado";
-        }
-        return "Devuelto";
     }
 
     ////////////////////////////////////////////////
@@ -1742,6 +1709,20 @@ public class GUI extends javax.swing.JFrame {
         reportePersonasPanel.setVisible(false);
         registroPrestamosPanel.setVisible(false);
         reportePrestamosPanel.setVisible(false);
+    }
+
+    private String getEstadoToString(Boolean estado) {
+        if (!estado) {
+            return "Prestado";
+        }
+        return "Devuelto";
+    }
+
+    private boolean getEstadoToBool(String estado) {
+        if (estado.equals("Prestado")) {
+            return false;
+        }
+        return true;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
