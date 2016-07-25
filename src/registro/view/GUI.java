@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -129,11 +132,11 @@ public class GUI extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         atributoPersonaLabel = new javax.swing.JLabel();
         nombresPersonaField = new javax.swing.JTextField();
-        correoPersonaField = new javax.swing.JTextField();
-        telefonoPersonaField = new javax.swing.JTextField();
         atributoPersonaField = new javax.swing.JTextField();
         registrarPersonaBtn = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
+        correoPersonaField = new javax.swing.JTextField();
+        telefonoPersonaField = new javax.swing.JFormattedTextField();
         reportePersonasPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         reportePersonas = new javax.swing.JTable();
@@ -241,10 +244,11 @@ public class GUI extends javax.swing.JFrame {
                 nombresPersonaFieldActionPerformed(evt);
             }
         });
-
-        correoPersonaField.setMaximumSize(new java.awt.Dimension(6, 20));
-
-        telefonoPersonaField.setMaximumSize(new java.awt.Dimension(6, 20));
+        nombresPersonaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombresPersonaFieldKeyTyped(evt);
+            }
+        });
 
         atributoPersonaField.setMaximumSize(new java.awt.Dimension(6, 20));
         atributoPersonaField.addActionListener(new java.awt.event.ActionListener() {
@@ -263,6 +267,18 @@ public class GUI extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel23.setText("Registrar Personas");
 
+        correoPersonaField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                correoPersonaFieldFocusLost(evt);
+            }
+        });
+
+        try {
+            telefonoPersonaField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout registroPersonasPanelLayout = new javax.swing.GroupLayout(registroPersonasPanel);
         registroPersonasPanel.setLayout(registroPersonasPanelLayout);
         registroPersonasPanelLayout.setHorizontalGroup(
@@ -279,13 +295,12 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(atributoPersonaLabel))
                         .addGap(32, 32, 32)
-                        .addGroup(registroPersonasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(registroPersonasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(registrarPersonaBtn)
-                            .addGroup(registroPersonasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(nombresPersonaField, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                                .addComponent(atributoPersonaField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(correoPersonaField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(telefonoPersonaField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(nombresPersonaField, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                            .addComponent(atributoPersonaField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(correoPersonaField)
+                            .addComponent(telefonoPersonaField))))
                 .addGap(366, 366, 366))
         );
         registroPersonasPanelLayout.setVerticalGroup(
@@ -754,6 +769,12 @@ public class GUI extends javax.swing.JFrame {
 
         atributoMaterialLabel.setText("placeh");
 
+        anioMaterialField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                anioMaterialFieldKeyTyped(evt);
+            }
+        });
+
         registrarMaterialBtn.setText("Registrar");
         registrarMaterialBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1035,6 +1056,39 @@ public class GUI extends javax.swing.JFrame {
     private void reportePrestamosTableMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportePrestamosTableMouseDragged
         displayMaterialPrestamo();
     }//GEN-LAST:event_reportePrestamosTableMouseDragged
+
+    private void anioMaterialFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_anioMaterialFieldKeyTyped
+        char vChar = evt.getKeyChar();
+        if (!(Character.isDigit(vChar) || (vChar == KeyEvent.VK_BACK_SPACE) || (vChar == KeyEvent.VK_DELETE))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_anioMaterialFieldKeyTyped
+
+    private void correoPersonaFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_correoPersonaFieldFocusLost
+        final String EMAIL_PATTERN
+                = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        String value = correoPersonaField.getText();
+
+        Matcher matcher = pattern.matcher(value);
+        boolean isValid = matcher.matches();
+        
+        if (!isValid) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese un email válido");
+            registrarPersonaBtn.setEnabled(false);
+        } else {
+            registrarPersonaBtn.setEnabled(true);
+        }
+    }//GEN-LAST:event_correoPersonaFieldFocusLost
+
+    private void nombresPersonaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombresPersonaFieldKeyTyped
+        char vChar = evt.getKeyChar();
+        if (!(Character.isAlphabetic(vChar) || (vChar == KeyEvent.VK_BACK_SPACE) || (vChar == KeyEvent.VK_DELETE))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_nombresPersonaFieldKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1377,7 +1431,7 @@ public class GUI extends javax.swing.JFrame {
         mostrarMaterialPanel = new JPanel();
         mostrarMaterialPanel.setLayout(new GridLayout(0, 1, 10, 10));
         scrollPaneM = new JScrollPane(mostrarMaterialPanel);
-        //studiantesScrollPane = new JScrollPane(jPanel);
+
         agregarMaterialBtn = new JButton("Seleccionar Material");
         agregarMaterialBtn.addActionListener(new java.awt.event.ActionListener() {
 
@@ -1433,14 +1487,13 @@ public class GUI extends javax.swing.JFrame {
         mostrarPersonaPanel = new JPanel();
         mostrarPersonaPanel.setLayout(new GridLayout(0, 1, 10, 10));
         scrollPaneP = new JScrollPane(mostrarPersonaPanel);
-        //estudiantesScrollPane = new JScrollPane(jPanel);
+
         agregarPersonaBtn = new JButton("Seleccionar Persona");
         agregarPersonaBtn.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 for (JRadioButton rb : personasRdBtns) {
                     if (rb.isSelected()) {
-                        //System.out.println(rb.getText());
                         setPersonaPrestamo(rb.getText());
                     }
                 }
@@ -1634,7 +1687,7 @@ public class GUI extends javax.swing.JFrame {
                     material.getAutor(),
                     material.getTitulo(),
                     material.getAnio() + "",
-                    material.getEstatus() + "",
+                    getEstadoToString(material.getEstatus()),
                     material.getClass().getSimpleName()
                 };
 
@@ -1808,7 +1861,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTable reportePrestamosTable;
     private javax.swing.JComboBox showMaterialBCmBx;
     private javax.swing.JTextField showPersonaField;
-    private javax.swing.JTextField telefonoPersonaField;
+    private javax.swing.JFormattedTextField telefonoPersonaField;
     private javax.swing.JComboBox tipoMaterialCombBox;
     private javax.swing.JComboBox tipoPersonaCombBox;
     private javax.swing.JTextField tituloMaterialField;

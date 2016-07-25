@@ -240,14 +240,12 @@
                               <Component id="atributoPersonaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="registrarPersonaBtn" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="nombresPersonaField" pref="188" max="32767" attributes="0"/>
-                                  <Component id="atributoPersonaField" max="32767" attributes="0"/>
-                                  <Component id="correoPersonaField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="telefonoPersonaField" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="nombresPersonaField" pref="188" max="32767" attributes="0"/>
+                              <Component id="atributoPersonaField" max="32767" attributes="0"/>
+                              <Component id="correoPersonaField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="telefonoPersonaField" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -340,21 +338,8 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nombresPersonaFieldActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nombresPersonaFieldKeyTyped"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="correoPersonaField">
-          <Properties>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[6, 20]"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="telefonoPersonaField">
-          <Properties>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[6, 20]"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="atributoPersonaField">
           <Properties>
@@ -380,6 +365,18 @@
               <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Registrar Personas"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="correoPersonaField">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="correoPersonaFieldFocusLost"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="telefonoPersonaField">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="##-########" subtype="-1" type="5"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>
@@ -1198,6 +1195,9 @@
         <Component class="javax.swing.JTextField" name="tituloMaterialField">
         </Component>
         <Component class="javax.swing.JTextField" name="anioMaterialField">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="anioMaterialFieldKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="atributoMaterialField">
         </Component>
