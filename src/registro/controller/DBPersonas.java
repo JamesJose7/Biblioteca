@@ -56,6 +56,10 @@ public class DBPersonas {
         return mPersonas;
     }
     
+    public void update(int idCol, int idPersona, Object value) throws SQLException {
+        personasManager.updatePersona(idCol, idPersona, value);
+    }
+    
     public void insert(Persona persona) throws SQLException {
         personasManager.insertPersona(persona);
     }

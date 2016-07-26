@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultCellEditor;
@@ -30,6 +32,8 @@ import javax.swing.JTable;
 import javax.swing.SpinnerDateModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -57,6 +61,7 @@ public class GUI extends javax.swing.JFrame {
         initComponents();
 
         initialLayout();
+        homePanel.setVisible(true);
         addCloseOperation();
 
         mDBManager = new DBManager();
@@ -180,6 +185,7 @@ public class GUI extends javax.swing.JFrame {
         reportePrestamosTable = new javax.swing.JTable();
         nRegistrosPrestamosTxtF = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
+        devolverPrestamoBtn = new javax.swing.JButton();
         reporteMaterialPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         reporteMaterialTable = new javax.swing.JTable();
@@ -201,6 +207,8 @@ public class GUI extends javax.swing.JFrame {
         registrarMaterialBtn = new javax.swing.JButton();
         estatusMaterialCombBox = new javax.swing.JComboBox();
         jLabel24 = new javax.swing.JLabel();
+        homePanel = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -221,6 +229,7 @@ public class GUI extends javax.swing.JFrame {
         registroPersonasPanel.setPreferredSize(new java.awt.Dimension(659, 529));
 
         tipoPersonaCombBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Alumno", "Docente" }));
+        tipoPersonaCombBox.setToolTipText("Cambiar de tipo de persona");
         tipoPersonaCombBox.setMaximumSize(new java.awt.Dimension(65, 27));
         tipoPersonaCombBox.setMinimumSize(new java.awt.Dimension(65, 27));
         tipoPersonaCombBox.setPreferredSize(new java.awt.Dimension(65, 27));
@@ -258,6 +267,7 @@ public class GUI extends javax.swing.JFrame {
         });
 
         registrarPersonaBtn.setText("Registrar");
+        registrarPersonaBtn.setToolTipText("Enviar persona a la base de datos");
         registrarPersonaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registrarPersonaBtnActionPerformed(evt);
@@ -433,6 +443,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel11.setText("Personas");
 
         agregarMaterialBtn.setText("Seleccionar Material");
+        agregarMaterialBtn.setToolTipText("Lista de material que lleva el préstamo");
         agregarMaterialBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarMaterialBtnActionPerformed(evt);
@@ -440,6 +451,7 @@ public class GUI extends javax.swing.JFrame {
         });
 
         agregarPersonaBtn.setText("Seleccionar Persona");
+        agregarPersonaBtn.setToolTipText("Persona que realiza el préstamo");
         agregarPersonaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarPersonaBtnActionPerformed(evt);
@@ -466,6 +478,7 @@ public class GUI extends javax.swing.JFrame {
         showPersonaField.setMaximumSize(new java.awt.Dimension(6, 20));
 
         registrarPrestamoBtn.setText("Registrar Préstamo");
+        registrarPrestamoBtn.setToolTipText("Enviar préstamo a la base de datos");
         registrarPrestamoBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registrarPrestamoBtnActionPerformed(evt);
@@ -641,6 +654,14 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel16.setText("Resultados Encontrados:");
 
+        devolverPrestamoBtn.setText("Devolver");
+        devolverPrestamoBtn.setToolTipText("Devolver un préstamo que ha sido prestado");
+        devolverPrestamoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                devolverPrestamoBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout reportePrestamosPanelLayout = new javax.swing.GroupLayout(reportePrestamosPanel);
         reportePrestamosPanel.setLayout(reportePrestamosPanelLayout);
         reportePrestamosPanelLayout.setHorizontalGroup(
@@ -655,7 +676,8 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(nRegistrosPrestamosTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(80, 80, 80)
                         .addComponent(jLabel15)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(devolverPrestamoBtn))
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(reportePrestamosPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -674,10 +696,11 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(reportePrestamosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(nRegistrosPrestamosTxtF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
+                    .addComponent(jLabel16)
+                    .addComponent(devolverPrestamoBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(5, Short.MAX_VALUE))
+                .addContainerGap(2, Short.MAX_VALUE))
         );
 
         reporteMaterialPanel.setMinimumSize(new java.awt.Dimension(659, 529));
@@ -750,6 +773,7 @@ public class GUI extends javax.swing.JFrame {
         registroMaterialPanel.setPreferredSize(new java.awt.Dimension(659, 529));
 
         tipoMaterialCombBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Libro", "Revista", "Tesis" }));
+        tipoMaterialCombBox.setToolTipText("Cambiar tipo de material");
         tipoMaterialCombBox.setMaximumSize(new java.awt.Dimension(65, 27));
         tipoMaterialCombBox.setMinimumSize(new java.awt.Dimension(65, 27));
         tipoMaterialCombBox.setPreferredSize(new java.awt.Dimension(65, 27));
@@ -776,13 +800,14 @@ public class GUI extends javax.swing.JFrame {
         });
 
         registrarMaterialBtn.setText("Registrar");
+        registrarMaterialBtn.setToolTipText("Enviar material a la base de datos");
         registrarMaterialBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registrarMaterialBtnActionPerformed(evt);
             }
         });
 
-        estatusMaterialCombBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Activo", "No Activo" }));
+        estatusMaterialCombBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Activo", "Inactivo" }));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel24.setText("Registro de Material Bibliográfico");
@@ -847,6 +872,28 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addComponent(registrarMaterialBtn)
                 .addContainerGap(145, Short.MAX_VALUE))
+        );
+
+        homePanel.setMinimumSize(new java.awt.Dimension(659, 529));
+
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/logo-BIVIR.png"))); // NOI18N
+
+        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
+        homePanel.setLayout(homePanelLayout);
+        homePanelLayout.setHorizontalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        homePanelLayout.setVerticalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jMenu1.setText("Material");
@@ -950,6 +997,11 @@ public class GUI extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(reportePersonasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -975,6 +1027,11 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(reportePersonasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -1031,6 +1088,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void registrarPrestamoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarPrestamoBtnActionPerformed
         registrarPrestamo();
+        cargarDatosTablas();
     }//GEN-LAST:event_registrarPrestamoBtnActionPerformed
 
     private void eliminarMaterialBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarMaterialBtnActionPerformed
@@ -1074,7 +1132,7 @@ public class GUI extends javax.swing.JFrame {
 
         Matcher matcher = pattern.matcher(value);
         boolean isValid = matcher.matches();
-        
+
         if (!isValid) {
             JOptionPane.showMessageDialog(null, "Por favor ingrese un email válido");
             registrarPersonaBtn.setEnabled(false);
@@ -1085,10 +1143,14 @@ public class GUI extends javax.swing.JFrame {
 
     private void nombresPersonaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombresPersonaFieldKeyTyped
         char vChar = evt.getKeyChar();
-        if (!(Character.isAlphabetic(vChar) || (vChar == KeyEvent.VK_BACK_SPACE) || (vChar == KeyEvent.VK_DELETE))) {
+        if (!(Character.isAlphabetic(vChar) || (vChar == KeyEvent.VK_BACK_SPACE) || (vChar == KeyEvent.VK_DELETE) || (vChar == KeyEvent.VK_SPACE))) {
             evt.consume();
         }
     }//GEN-LAST:event_nombresPersonaFieldKeyTyped
+
+    private void devolverPrestamoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devolverPrestamoBtnActionPerformed
+        devolverPrestamo();
+    }//GEN-LAST:event_devolverPrestamoBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1138,7 +1200,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void closeWindow() {
         if (JOptionPane.showConfirmDialog(null,
-                "Are you sure to close this window?", "Really Closing?",
+                "¿Está seguro que desea cerrar el programa?", "Cerrando",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 
@@ -1234,9 +1296,48 @@ public class GUI extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-        String[] colsNames = {"Codigo", "Autor", "Titulo", "Anio", "Estatus", "", "Tipo"};
+        String[] colsNames = {"Codigo", "Autor", "Titulo", "Año", "Estatus", "", "Tipo"};
 
-        DefaultTableModel model = new DefaultTableModel(colsNames, 0);
+        DefaultTableModel model = new DefaultTableModel(colsNames, 0) {
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                if (mColIndex == 0 || mColIndex == 4 || mColIndex == 6) {
+                    return false;
+                }
+                return true;
+            }
+        };
+
+        model.addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent tme) {
+                if (tme.getType() == TableModelEvent.UPDATE) {
+
+                    try {
+                        if (tme.getColumn() == 3) {
+                            try {
+                                mDBManager.updateMaterial(tme.getColumn(),
+                                        Integer.parseInt(model.getValueAt(tme.getFirstRow(), 0) + ""),
+                                        Integer.parseInt(model.getValueAt(tme.getFirstRow(), tme.getColumn()) + ""));
+
+                                JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
+                            } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(null, "Por favor ingrese un número en éste campo");
+                            }
+                        } else {
+                            mDBManager.updateMaterial(tme.getColumn(),
+                                    Integer.parseInt(model.getValueAt(tme.getFirstRow(), 0) + ""),
+                                    model.getValueAt(tme.getFirstRow(), tme.getColumn()) + "");
+
+                            JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    reporteMaterial(reporteMaterialTable);
+                }
+            }
+        });
 
         for (MaterialBibliografico material : mDBManager.getMaterial()) {
             String[] dataMaterial = {
@@ -1279,6 +1380,7 @@ public class GUI extends javax.swing.JFrame {
 
             }
         }
+
         table.setModel(model);
 
         nRegistrosMaterialesTxtF.setText(mDBManager.getMaterial().size() + "");
@@ -1350,7 +1452,66 @@ public class GUI extends javax.swing.JFrame {
 
         String[] colsNames = {"Identificacion", "Nombres", "Correo", "Telefono", "", "Tipo"};
 
-        DefaultTableModel model = new DefaultTableModel(colsNames, 0);
+        DefaultTableModel model = new DefaultTableModel(colsNames, 0) {
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                if (mColIndex == 0 || mColIndex == 5) {
+                    return false;
+                }
+                return true;
+            }
+        };
+
+        model.addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent tme) {
+                if (tme.getType() == TableModelEvent.UPDATE) {
+
+                    try {
+                        if (tme.getColumn() == 3) {
+                            try {
+                                mDBManager.updatePersona(tme.getColumn(),
+                                        Integer.parseInt(model.getValueAt(tme.getFirstRow(), 0) + ""),
+                                        Integer.parseInt(model.getValueAt(tme.getFirstRow(), tme.getColumn()) + ""));
+
+                                JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
+                            } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(null, "Por favor ingrese un número en éste campo");
+                            }
+                        } else if (tme.getColumn() == 2) {
+                            final String EMAIL_PATTERN
+                                    = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+                            Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+                            String value = model.getValueAt(tme.getFirstRow(), tme.getColumn()) + "";
+
+                            Matcher matcher = pattern.matcher(value);
+                            boolean isValid = matcher.matches();
+
+                            if (!isValid) {
+                                JOptionPane.showMessageDialog(null, "Por favor ingrese un email válido");
+                            } else {
+                                mDBManager.updatePersona(tme.getColumn(),
+                                        Integer.parseInt(model.getValueAt(tme.getFirstRow(), 0) + ""),
+                                        model.getValueAt(tme.getFirstRow(), tme.getColumn()) + "");
+                                JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
+                            }
+
+                            
+                        } else {
+                            mDBManager.updatePersona(tme.getColumn(),
+                                        Integer.parseInt(model.getValueAt(tme.getFirstRow(), 0) + ""),
+                                        model.getValueAt(tme.getFirstRow(), tme.getColumn()) + "");
+                            JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    reportePersonas(reportePersonas);
+                }
+            }
+        });
 
         for (Persona persona : mDBManager.getPersonas()) {
             String[] dataPersona = {
@@ -1449,19 +1610,25 @@ public class GUI extends javax.swing.JFrame {
 
         materialBChkBxs.clear();
         for (MaterialBibliografico material : mDBManager.getMaterial()) {
-            JCheckBox cb = new JCheckBox(material.getTitulo());
-            materialBChkBxs.put(Integer.parseInt(material.getCodigo()), cb);
-            mostrarMaterialPanel.add(cb);
-            mostrarMaterialPanel.revalidate();
-            mostrarMaterialPanel.repaint();
+            if (material.getEstatus()) {
+                JCheckBox cb = new JCheckBox(material.getTitulo());
+                materialBChkBxs.put(Integer.parseInt(material.getCodigo()), cb);
+                mostrarMaterialPanel.add(cb);
+                mostrarMaterialPanel.revalidate();
+                mostrarMaterialPanel.repaint();
+            }
         }
 
-        mostrarMaterialesFrame.add(scrollPaneM);
-        mostrarMaterialesFrame.add(agregarMaterialBtn, BorderLayout.SOUTH);
-        mostrarMaterialesFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        mostrarMaterialesFrame.setSize(300, 500);
-        mostrarMaterialesFrame.setLocationRelativeTo(null);
-        mostrarMaterialesFrame.setVisible(true);
+        if (materialBChkBxs.size() > 0) {
+            mostrarMaterialesFrame.add(scrollPaneM);
+            mostrarMaterialesFrame.add(agregarMaterialBtn, BorderLayout.SOUTH);
+            mostrarMaterialesFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            mostrarMaterialesFrame.setSize(300, 500);
+            mostrarMaterialesFrame.setLocationRelativeTo(null);
+            mostrarMaterialesFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "No existen materiales disponibles");
+        }
     }
 
     private void agregarMaterialPrestamo(int idMaterial) {
@@ -1544,6 +1711,16 @@ public class GUI extends javax.swing.JFrame {
     }
 
     private void cargarDatosTablas() {
+        try {
+            //Update material and personas
+            mDBManager.importMaterial();
+            mDBManager.importPersonas();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
         String[] colsMateriales = {"Código", "Título", "Autor", "Anio"};
         String[] colsPersonas = {"ID", "Nombres", "Teléfono"};
 
@@ -1551,14 +1728,16 @@ public class GUI extends javax.swing.JFrame {
         DefaultTableModel modelPersonas = new DefaultTableModel(colsPersonas, 0);
 
         for (MaterialBibliografico material : mDBManager.getMaterial()) {
-            String[] data = {
-                material.getCodigo(),
-                material.getTitulo(),
-                material.getAutor(),
-                material.getAnio() + ""
-            };
+            if (material.getEstatus()) {
+                String[] data = {
+                    material.getCodigo(),
+                    material.getTitulo(),
+                    material.getAutor(),
+                    material.getAnio() + ""
+                };
 
-            modelMateriales.addRow(data);
+                modelMateriales.addRow(data);
+            }
         }
 
         for (Persona persona : mDBManager.getPersonas()) {
@@ -1585,6 +1764,10 @@ public class GUI extends javax.swing.JFrame {
                         mesDevolucionSpinner.getValue() + "",
                         diaDevolucionSpinner.getValue() + "");
                 Date fechaDevolucion = new Date(formattedFecha);
+
+                for (MaterialBibliografico material : materialSeleccionado) {
+                    mDBManager.updateMaterial(4, Integer.parseInt(material.getCodigo()), 0);
+                }
 
                 mDBManager.insertPrestamo(new Prestamo(materialSeleccionado,
                         personaSeleccionada,
@@ -1622,6 +1805,16 @@ public class GUI extends javax.swing.JFrame {
     }
 
     private void reportePrestamos() {
+        try {
+            //Update all
+            mDBManager.importPrestamos();
+            mDBManager.importMaterial();
+            mDBManager.importPersonas();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
         String[] colsNames = {"Codigo",
             "Fecha Prestamo",
@@ -1633,7 +1826,11 @@ public class GUI extends javax.swing.JFrame {
             "Telefono"
         };
 
-        DefaultTableModel model = new DefaultTableModel(colsNames, 0);
+        DefaultTableModel model = new DefaultTableModel(colsNames, 0) {
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+            }
+        };;
 
         for (Prestamo prestamo : mDBManager.getPrestamos()) {
             Persona persona = prestamo.getPersona();
@@ -1701,6 +1898,34 @@ public class GUI extends javax.swing.JFrame {
         }
     }
 
+    private void devolverPrestamo() {
+        int nSelectedRows = reportePrestamosTable.getSelectedRowCount();
+
+        if (nSelectedRows == 1) {
+            int rowI = reportePrestamosTable.getSelectedRow();
+            int prestamoId = Integer.valueOf(reportePrestamosTable.getValueAt(rowI, 0) + "");
+            Prestamo prestamo = mDBManager.getPrestamoById(prestamoId);
+
+            if (!prestamo.getEstatus()) {
+                try {
+                    mDBManager.updatePrestamo(4, prestamoId, 1);
+
+                    //update material
+                    for (MaterialBibliografico material : prestamo.getMateriales()) {
+                        mDBManager.updateMaterial(4, Integer.parseInt(material.getCodigo()), 1);
+                    }
+
+                    //reload table
+                    reportePrestamos();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El prestamo ya ha sido devuelto");
+            }
+        }
+    }
+
     ////////////////////////////////////////////////
     private void switchToRegMaterial() {
         initialLayout();
@@ -1762,6 +1987,7 @@ public class GUI extends javax.swing.JFrame {
         reportePersonasPanel.setVisible(false);
         registroPrestamosPanel.setVisible(false);
         reportePrestamosPanel.setVisible(false);
+        homePanel.setVisible(false);
     }
 
     private String getEstadoToString(Boolean estado) {
@@ -1789,11 +2015,13 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel atributoPersonaLabel;
     private javax.swing.JTextField autorMaterialField;
     private javax.swing.JTextField correoPersonaField;
+    private javax.swing.JButton devolverPrestamoBtn;
     private javax.swing.JSpinner diaDevolucionSpinner;
     private javax.swing.JButton eliminarMaterialBtn;
     private javax.swing.JButton eliminarMaterialBtn1;
     private javax.swing.JComboBox estadoCmBx;
     private javax.swing.JComboBox estatusMaterialCombBox;
+    private javax.swing.JPanel homePanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1814,6 +2042,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -52,7 +52,7 @@ public class DBPrestamos {
 
             Date fechaPrestamo = rs.getDate("Fecha_Prestamo");
             Date fechaDevolucion = rs.getDate("Fecha_Devolucion");
-            boolean estado = getEstadoAsBool(rs.getInt("Estado"));
+            boolean estado = getEstadoAsBool(rs.getInt("Estatus"));
             String Observaciones = rs.getString("Observaciones");
 
             //Get persona
@@ -143,6 +143,10 @@ public class DBPrestamos {
         }
 
         return isDetallePrestamoInserted;
+    }
+    
+    public void update(int idCol, int idPrestamo, Object value) throws SQLException {
+        prestamosManager.updatePrestamo(idCol, idPrestamo, value);
     }
 
     private int getEstadoAsInt(boolean estado) {

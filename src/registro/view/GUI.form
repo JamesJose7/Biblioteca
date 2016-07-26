@@ -174,6 +174,13 @@
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
+          <Group type="103" rootIndex="6" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="homePanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -207,6 +214,13 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   <Component id="reportePersonasPanel" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+          <Group type="103" rootIndex="6" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="homePanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -296,6 +310,7 @@
                 <StringItem index="1" value="Docente"/>
               </StringArray>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Cambiar de tipo de persona"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[65, 27]"/>
             </Property>
@@ -354,6 +369,7 @@
         <Component class="javax.swing.JButton" name="registrarPersonaBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Registrar"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enviar persona a la base de datos"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrarPersonaBtnActionPerformed"/>
@@ -684,6 +700,7 @@
         <Component class="javax.swing.JButton" name="agregarMaterialBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Seleccionar Material"/>
+            <Property name="toolTipText" type="java.lang.String" value="Lista de material que lleva el pr&#xe9;stamo"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregarMaterialBtnActionPerformed"/>
@@ -692,6 +709,7 @@
         <Component class="javax.swing.JButton" name="agregarPersonaBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Seleccionar Persona"/>
+            <Property name="toolTipText" type="java.lang.String" value="Persona que realiza el pr&#xe9;stamo"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregarPersonaBtnActionPerformed"/>
@@ -752,6 +770,7 @@
         <Component class="javax.swing.JButton" name="registrarPrestamoBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Registrar Pr&#xe9;stamo"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enviar pr&#xe9;stamo a la base de datos"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrarPrestamoBtnActionPerformed"/>
@@ -843,7 +862,8 @@
                           <Component id="nRegistrosPrestamosTxtF" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="devolverPrestamoBtn" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane7" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -868,10 +888,11 @@
                       <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="nRegistrosPrestamosTxtF" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="devolverPrestamoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jScrollPane6" min="-2" pref="194" max="-2" attributes="0"/>
-                  <EmptySpace pref="5" max="32767" attributes="0"/>
+                  <EmptySpace pref="2" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -948,6 +969,15 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Resultados Encontrados:"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="devolverPrestamoBtn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Devolver"/>
+            <Property name="toolTipText" type="java.lang.String" value="Devolver un pr&#xe9;stamo que ha sido prestado"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="devolverPrestamoBtnActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -1151,6 +1181,7 @@
                 <StringItem index="2" value="Tesis"/>
               </StringArray>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Cambiar tipo de material"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[65, 27]"/>
             </Property>
@@ -1204,6 +1235,7 @@
         <Component class="javax.swing.JButton" name="registrarMaterialBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Registrar"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enviar material a la base de datos"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrarMaterialBtnActionPerformed"/>
@@ -1214,7 +1246,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">
                 <StringItem index="0" value="Activo"/>
-                <StringItem index="1" value="No Activo"/>
+                <StringItem index="1" value="Inactivo"/>
               </StringArray>
             </Property>
           </Properties>
@@ -1225,6 +1257,44 @@
               <Font name="Tahoma" size="18" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Registro de Material Bibliogr&#xe1;fico"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="homePanel">
+      <Properties>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[659, 529]"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel28" pref="639" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel28" pref="507" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel28">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/res/logo-BIVIR.png"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

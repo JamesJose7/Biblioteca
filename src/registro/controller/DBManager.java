@@ -56,6 +56,10 @@ public class DBManager {
         return mDBMaterial.insert(material);
     }
     
+    public void updateMaterial(int idCol, int idMaterial, Object value) throws SQLException {
+        mDBMaterial.update(idCol, idMaterial, value);
+    }
+    
     public int deleteMaterial(int idMaterial) throws SQLException {
         return mDBMaterial.delete(idMaterial);
     }
@@ -68,6 +72,10 @@ public class DBManager {
         mDBPersonas.insert(persona);
     }
     
+    public void updatePersona(int idCol, int idPersona, Object value) throws SQLException {
+        mDBPersonas.update(idCol, idPersona, value);
+    }
+    
     public int deletePersona(int idPersona) throws SQLException {
         return mDBPersonas.delete(idPersona);
     }
@@ -78,6 +86,10 @@ public class DBManager {
     
     public void insertPrestamo(Prestamo prestamo) throws ClassNotFoundException, SQLException {
         mDBPrestamos.insertarPrestamo(prestamo);
+    }
+    
+    public void updatePrestamo(int idCol, int idCatalogo, Object value) throws SQLException {
+        mDBPrestamos.update(idCol, idCatalogo, value);
     }
     
     public List<MaterialBibliografico> getMaterial() {

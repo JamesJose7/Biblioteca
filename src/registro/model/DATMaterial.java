@@ -7,7 +7,11 @@ import java.sql.Statement;
 
 public class DATMaterial {
 
-    DATConnection mDATConnection;
+    private DATConnection mDATConnection;
+    
+    private String[] colNames = {
+        "id_Material", "Autor", "Titulo", "Anio", "Estado", "Tipo", "SpecialAttr"};
+
 
     public DATMaterial(DATConnection datConnection) {
         mDATConnection = datConnection;
@@ -60,6 +64,16 @@ public class DATMaterial {
         }
         
         return stmt.executeUpdate(query);
+    }
+    
+        public void updateMaterial(int iCol, int idMaterial, Object value) throws SQLException {
+        String sql = "UPDATE material SET " + colNames[iCol] + " = ? WHERE id_Material = ?";
+        
+        PreparedStatement ps = mDATConnection.getConnection().prepareStatement(sql);
+        ps.setObject(1, value);
+        ps.setInt(2, idMaterial);
+        
+        ps.executeUpdate();
     }
     
     public int deleteMaterial(int idMaterial) throws SQLException {

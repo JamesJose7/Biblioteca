@@ -63,6 +63,10 @@ public class DBMaterial {
         return mMateriales;
     }
     
+    public void update(int idCol, int idMaterial, Object value) throws SQLException {
+        materialManager.updateMaterial(idCol, idMaterial, value);
+    }
+    
     public int insert(MaterialBibliografico material) throws SQLException {
         return materialManager.insertMaterial(material);
     }

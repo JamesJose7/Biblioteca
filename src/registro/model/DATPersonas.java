@@ -1,11 +1,16 @@
 package registro.model;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DATPersonas {
-    DATConnection mDATConnection;
+    private DATConnection mDATConnection; 
+    
+    private String[] colNames = {
+        "id_Personas", "Nombre", "Correo", "Telefono", "Tipo", "SpecialAttr"};
+
     
     public DATPersonas(DATConnection datConnection) {
         mDATConnection = datConnection;
@@ -50,6 +55,16 @@ public class DATPersonas {
         }
         
         stmt.executeUpdate(query);
+    }
+    
+        public void updatePersona(int iCol, int idPersona, Object value) throws SQLException {
+        String sql = "UPDATE personas SET " + colNames[iCol] + " = ? WHERE id_Personas = ?";
+        
+        PreparedStatement ps = mDATConnection.getConnection().prepareStatement(sql);
+        ps.setObject(1, value);
+        ps.setInt(2, idPersona);
+        
+        ps.executeUpdate();
     }
     
     public int deletePersona(int idPersona) throws SQLException {
